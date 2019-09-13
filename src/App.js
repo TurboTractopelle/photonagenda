@@ -1,11 +1,13 @@
 import React from "react";
-import Agenda from "./containers/Agenda/Agenda";
 import "./App.css";
+import List from "./components/List/List";
+import Nav from "./components/Nav/Nav";
 
 function App() {
   return (
     <div className="App">
-      <Agenda />
+      <List />
+      <Nav />
     </div>
   );
 }
