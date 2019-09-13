@@ -11,14 +11,14 @@ class Nav extends Component {
     return (
       <div>
         <button
-          onClick={this.props.setCat("formations")}
-          className={this.isActive("formations")}
+          onClick={this.props.setCat("formation")}
+          className={this.isActive("formation")}
         >
           Formations
         </button>
         <button
-          onClick={this.props.setCat("salons")}
-          className={this.isActive("salons")}
+          onClick={this.props.setCat("salon")}
+          className={this.isActive("salon")}
         >
           Salons et conférences
         </button>

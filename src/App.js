@@ -1,20 +1,30 @@
 import React, { Component } from "react";
 import "./App.css";
-import List from "./components/List/List";
-import Nav from "./components/Nav/Nav";
 import { connect } from "react-redux";
 import Loading from "./components/Loading/Loading";
+import * as actions from "./store/actions/actions";
+import Agenda from "./components/Agenda/Agenda";
+import Error from "./components/Error/Error";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchAgenda();
+  }
+
   render() {
-    const loading = this.props.loading && <Loading />;
+    let display;
+    if (this.props.loading) {
+      display = <Loading />;
+    } else if (this.props.error) {
+      display = <Error error={this.props.error} />;
+    } else {
+      display = <Agenda />;
+    }
 
     return (
       <div className="App">
         <h1>Agenda</h1>
-        {loading}
-        <List />
-        <Nav />
+        {display}
       </div>
     );
   }
@@ -22,12 +32,15 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.loading
+    loading: state.loading,
+    error: state.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    fetchAgenda: () => dispatch(actions.fetchAgenda())
+  };
 };
 
 export default connect(

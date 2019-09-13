@@ -1,16 +1,17 @@
 import React from "react";
 
 const Item = props => {
-  const link = props.link && (
-    <a href={props.link} target="_blank">
-      {props.link}
+  const data = props.itemData;
+  const link = data.link && (
+    <a href={data.link} target="_blank" rel="noopener noreferrer">
+      {data.link}
     </a>
   );
 
   return (
     <div className="item">
-      <h3>{props.title}</h3>
-      {props.dateStart} – {props.place} {props.country}
+      <h3>{data.title}</h3>
+      {data.dateStart} – {data.place} {data.country}
       <br />
       {link}
     </div>

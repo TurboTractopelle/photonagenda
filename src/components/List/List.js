@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Item from "../Item/Item";
 
 class List extends Component {
   render() {
-    return <div>length: {this.props.data.length}</div>;
+    let list;
+    if (this.props.data.length === 0) {
+      list = "No item found";
+    } else {
+      list = this.props.data.map((item, i) => {
+        return <Item itemData={item} key={"item" + i} />;
+      });
+    }
+
+    return <div>{list}</div>;
   }
 }
 
