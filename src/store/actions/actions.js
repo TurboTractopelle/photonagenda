@@ -34,6 +34,6 @@ export const fetchAgenda = () => {
             dispatch(fetchAgendaFail(err));
           });
       }
-    }, 2000);
+    }, 500);
   };
 };

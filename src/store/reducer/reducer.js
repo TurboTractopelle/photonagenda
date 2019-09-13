@@ -1,4 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
+// @ts-ignore
+import { preparse } from "date-and-time";
 
 const initialState = {
   loading: false,
@@ -34,6 +36,20 @@ const reducer = (state = initialState, action) => {
 
 function getDataFilteredByCat(data, cat) {
   return data.filter(item => item.cat === cat);
+}
+
+function setUsefulDates(data) {
+  let dataWithDates = data.map(item => {
+    const parsedDateStart = data.dateStart
+      ? preparse(data.dateStart, "YYYY-MM-DD HH:mm:ss")
+      : {};
+    const parsedDateEnd = data.dateEnd
+      ? preparse(data.dateEnd, "YYYY-MM-DD HH:mm:ss")
+      : {};
+
+    console.log(data.dateStart, parsedDateStart);
+    console.log(data.dateEnd, parsedDateEnd);
+  });
 }
 
 export default reducer;

@@ -4,3 +4,15 @@
 .active {
   font-weight: bold;
 }
+
+.List {
+}
+.Item {
+  padding: 0.5rem;
+}
+
+.Item h3 {
+  font-size: 0.9rem;
+  padding: 0;
+  margin: 0;
+}
