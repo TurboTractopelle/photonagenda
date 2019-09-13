@@ -1,15 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
 import List from "./components/List/List";
 import Nav from "./components/Nav/Nav";
+import { connect } from "react-redux";
+import Loading from "./components/Loading/Loading";
 
-function App() {
-  return (
-    <div className="App">
-      <List />
-      <Nav />
-    </div>
-  );
+class App extends Component {
+  render() {
+    const loading = this.props.loading && <Loading />;
+
+    return (
+      <div className="App">
+        <h1>Agenda</h1>
+        {loading}
+        <List />
+        <Nav />
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loading: state.loading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
