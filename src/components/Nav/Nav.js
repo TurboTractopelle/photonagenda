@@ -10,6 +10,9 @@ class Nav extends Component {
   render() {
     return (
       <div>
+        <button onClick={this.props.setCat("")} className={this.isActive("")}>
+          Tous
+        </button>
         <button
           onClick={this.props.setCat("formation")}
           className={this.isActive("formation")}

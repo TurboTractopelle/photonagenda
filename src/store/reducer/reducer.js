@@ -1,10 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 // @ts-ignore
-import { preparse } from "date-and-time";
+import { preparse, parse as dateParser, format } from "date-and-time";
 
 const initialState = {
   loading: false,
-  cat: "formation",
+  cat: "",
   error: "",
   dataCache: [],
   data: []
@@ -20,14 +20,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        dataCache: action.data,
-        data: getDataFilteredByCat(action.data, state.cat)
+        dataCache: setUsefulDates(action.data),
+        data: setUsefulDates(action.data)
       };
     case actionTypes.SET_CAT:
       return {
         ...state,
         cat: action.cat,
-        data: getDataFilteredByCat(state.dataCache, action.cat)
+        data: action.cat
+          ? getDataFilteredByCat(state.dataCache, action.cat)
+          : state.dataCache
       };
     default:
       return state;
@@ -39,16 +41,48 @@ function getDataFilteredByCat(data, cat) {
 }
 
 function setUsefulDates(data) {
-  let dataWithDates = data.map(item => {
-    const parsedDateStart = data.dateStart
-      ? preparse(data.dateStart, "YYYY-MM-DD HH:mm:ss")
+  return data.map(item => {
+    let displayDate;
+    const d1 = item.dateStart
+      ? preparse(item.dateStart, "YYYY-MM-DD HH:mm:ss")
       : {};
-    const parsedDateEnd = data.dateEnd
-      ? preparse(data.dateEnd, "YYYY-MM-DD HH:mm:ss")
+    const d2 = item.dateEnd
+      ? preparse(item.dateEnd, "YYYY-MM-DD HH:mm:ss")
       : {};
 
-    console.log(data.dateStart, parsedDateStart);
-    console.log(data.dateEnd, parsedDateEnd);
+    //console.log(item.dateStart, d1);
+    //console.log(item.dateEnd, d2);
+
+    // gérer affichage des dates
+    // si pas de date de fin
+    if (!item.dateStart) {
+      displayDate = "";
+    } else if (!item.dateEnd) {
+      const objDateStart = dateParser(item.dateStart, "YYYY-MM-DD HH:mm:ss");
+      // @ts-ignore
+      displayDate = format(objDateStart, "DD MMM. YYYY");
+    } else {
+      const objDateStart = dateParser(item.dateStart, "YYYY-MM-DD HH:mm:ss");
+      const objDateEnd = dateParser(item.dateEnd, "YYYY-MM-DD HH:mm:ss");
+      // compare month
+      if (d1.M !== d2.M) {
+        displayDate =
+          // @ts-ignore
+          format(objDateStart, "DD MMM.") +
+          "-" +
+          // @ts-ignore
+          format(objDateEnd, "DD MMM. YYYY");
+      } else {
+        displayDate =
+          // @ts-ignore
+          format(objDateStart, "DD") +
+          "-" +
+          // @ts-ignore
+          format(objDateEnd, "DD MMM. YYYY");
+      }
+    }
+
+    return { ...item, displayDate };
   });
 }
 
