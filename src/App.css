@@ -7,8 +7,18 @@
 
 .List {
 }
+
 .Item {
   padding: 0.5rem;
+}
+
+.Item .item-cat {
+  background: #aaa;
+  transition: all ease 500ms;
+  cursor: pointer;
+}
+.Item .item-cat:hover {
+  background: rgb(228, 92, 92);
 }
 
 .Item h3 {
